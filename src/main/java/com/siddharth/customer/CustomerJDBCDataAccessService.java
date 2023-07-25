@@ -34,7 +34,6 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
                 FROM customer
                 WHERE id = ?
                 """;
-
         return jdbcTemplate
                 .query(sql, customerRowMapper, id)
                 .stream()
