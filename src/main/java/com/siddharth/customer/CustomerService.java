@@ -2,6 +2,7 @@ package com.siddharth.customer;
 
 import com.siddharth.exception.DuplicateResourceException;
 import com.siddharth.exception.RequestValidationException;
+import com.siddharth.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class CustomerService {
 
     public Customer getCustomer(Integer id) {
         return customerDao.selectCustomerById(id)
-                .orElseThrow(() -> new RequestValidationException(
+                .orElseThrow(() -> new ResourceNotFoundException(
                         "customer with id [%s] not found".formatted(id)
                 ));
 
