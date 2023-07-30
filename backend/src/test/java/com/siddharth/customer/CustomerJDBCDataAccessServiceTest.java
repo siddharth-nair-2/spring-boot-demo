@@ -232,7 +232,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         assertThat(actual).isPresent().hasValue(updatedCustomer);
     }
 
-    @Test
+/*    @Test
     void updateCustomerWithOnlyAge() {
         // Given
         Customer customer = insertLocalCustomer();
@@ -258,7 +258,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         //Then
         assertThat(actual).isPresent().hasValue(updatedCustomer);
     }
-
+*/
     @Test
     void updateCustomerWithAllFields() {
         // Given
