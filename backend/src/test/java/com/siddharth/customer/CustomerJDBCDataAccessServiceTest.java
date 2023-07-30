@@ -232,33 +232,33 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         assertThat(actual).isPresent().hasValue(updatedCustomer);
     }
 
-/*    @Test
-    void updateCustomerWithOnlyAge() {
-        // Given
-        Customer customer = insertLocalCustomer();
+//    @Test
+//    void updateCustomerWithOnlyAge() {
+//        // Given
+//        Customer customer = insertLocalCustomer();
+//
+//        int id = underTest.selectAllCustomers().stream()
+//                .filter(c -> c.getEmail().equals(customer.getEmail()))
+//                .map(Customer::getId)
+//                .findFirst()
+//                .orElseThrow();
+//
+//        // When
+//        int updatedAge = 57;
+//        Customer updatedCustomer = new Customer(
+//                id,
+//                customer.getName(),
+//                customer.getEmail(),
+//                updatedAge);
+//
+//        underTest.updateCustomer(updatedCustomer);
+//
+//        Optional<Customer> actual = underTest.selectCustomerById(id);
+//
+//        //Then
+//        assertThat(actual).isPresent().hasValue(updatedCustomer);
+//    }
 
-        int id = underTest.selectAllCustomers().stream()
-                .filter(c -> c.getEmail().equals(customer.getEmail()))
-                .map(Customer::getId)
-                .findFirst()
-                .orElseThrow();
-
-        // When
-        int updatedAge = 57;
-        Customer updatedCustomer = new Customer(
-                id,
-                customer.getName(),
-                customer.getEmail(),
-                updatedAge);
-
-        underTest.updateCustomer(updatedCustomer);
-
-        Optional<Customer> actual = underTest.selectCustomerById(id);
-
-        //Then
-        assertThat(actual).isPresent().hasValue(updatedCustomer);
-    }
-*/
     @Test
     void updateCustomerWithAllFields() {
         // Given
@@ -313,6 +313,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         //Then
         assertThat(actual).isPresent().hasValue(updatedCustomer);
     }
+
     private Customer insertLocalCustomer() {
         String email = FAKER.internet().safeEmailAddress() + "_" + UUID.randomUUID();
         String name = FAKER.name().fullName();
