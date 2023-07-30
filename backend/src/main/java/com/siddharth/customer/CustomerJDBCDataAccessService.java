@@ -62,7 +62,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
         var sql = """
                 SELECT id, name, email, age
                 FROM customer
-                WHERE email = ?
+                WHERE name = ?
                 """;
 
         return jdbcTemplate.query(sql, customerRowMapper, email).size() > 0;
