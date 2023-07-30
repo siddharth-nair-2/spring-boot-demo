@@ -55,14 +55,14 @@ jobs:
       - name: Slack Maven building
         run: >
           curl -X POST -H 'Content-type: application/json'
-          --data '{"text":"Building with Maven :apache_maven: :pray_pepe: "}' 
+          --data '{"text":" :apache_maven: Building with Maven:pray_pepe: "}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Build Package Push with Maven
         run: mvn -ntp -B verify -Ddocker.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}} jib:build
       - name: Slack pushed to docker hub message
         run: >
           curl -X POST -H 'Content-type: application/json'
-          --data '{"text":"Image tag: ${{steps.build-number.outputs.BUILD_NUMBER}} pushed to ${{ secrets.DOCKERHUB_REPO_URL }} :docker: :meow_party: "}' 
+          --data '{"text":" :docker: Image tag: ${{steps.build-number.outputs.BUILD_NUMBER}} pushed to ${{ secrets.DOCKERHUB_REPO_URL }} :meow_party: "}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Update Dockerrun.aws.json api image tag with new build number
         run: |
@@ -74,7 +74,7 @@ jobs:
       - name: Slack starting AWS deploy message
         run: >
           curl -X POST -H 'Content-type: application/json'
-          --data '{"text":"Starting deployment to Elastic Beanstalk :aws: :leo-toast: "}' 
+          --data '{"text":" :aws: Starting deployment to Elastic Beanstalk :leo-toast: "}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v21
@@ -90,7 +90,7 @@ jobs:
       - name: Slack committing to repo message
         run: >
           curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":"Committing to repo https://github.com/siddharth-nair-2/spring-boot-demo/ :githubloading: "}' 
+          --data '{"text":" :githubloading: Committing to repo https://github.com/siddharth-nair-2/spring-boot-demo/ "}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Commit and push Dockerrun.aws.json
         run: |
@@ -102,7 +102,7 @@ jobs:
       - name: Slack successful completion message
         run: >
           curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":"Wohooo! Deployment process complete :github-approved: :among-us-party: - ${{ secrets.EB_ENVIRONMENT_URL }} "}' 
+          --data '{"text":":github-approved: Wohooo! Deployment process complete :among-us-party: - ${{ secrets.EB_ENVIRONMENT_URL }} "}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Slack status message
         if: always()
