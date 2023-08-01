@@ -4,12 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        lato: ["Lato", "sans-serif"],
+        montserrat: ["Montserrat", "sans-serif"],
       },
     },
-  },
-  plugins: [require("daisyui")],
-  daisyui: {
-    themes: ["night", "light", "dark"],
   },
 };

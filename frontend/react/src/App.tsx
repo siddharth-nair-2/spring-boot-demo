@@ -1,10 +1,21 @@
+import { Button } from "@chakra-ui/react";
+import SidebarWithHeader from "./components/shared/Sidebar";
+import { useEffect } from "react";
+import { getCustomers } from "./services/client";
+
 function App() {
+  useEffect(() => {
+    getCustomers()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
-    <div>
-      <button className="btn btn-secondary w-64 rounded-full">
-        please Dont be Caps
-      </button>
-    </div>
+    <SidebarWithHeader>
+      <Button colorScheme="teal" variant="outline">
+        Click me!
+      </Button>
+    </SidebarWithHeader>
   );
 }
 
