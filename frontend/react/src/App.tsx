@@ -1,20 +1,49 @@
-import { Button } from "@chakra-ui/react";
+import { Spinner, Text } from "@chakra-ui/react";
 import SidebarWithHeader from "./components/shared/Sidebar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getCustomers } from "./services/client";
+import { Customer } from "./interface/customer";
+import ProfileCard from "./components/shared/ProfileCard";
 
 function App() {
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
+    setLoading(true);
     getCustomers()
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => setCustomers(res.data))
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
   }, []);
+
+  if (loading) {
+    return (
+      <SidebarWithHeader>
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
+      </SidebarWithHeader>
+    );
+  }
+
+  if (customers.length <= 0) {
+    return (
+      <SidebarWithHeader>
+        <Text>No Customers found!</Text>
+      </SidebarWithHeader>
+    );
+  }
 
   return (
     <SidebarWithHeader>
-      <Button colorScheme="teal" variant="outline">
-        Click me!
-      </Button>
+      {customers.map((customer) => {
+        return <ProfileCard />;
+      })}
     </SidebarWithHeader>
   );
 }
