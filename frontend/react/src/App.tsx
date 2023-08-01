@@ -1,4 +1,4 @@
-import { Spinner, Text } from "@chakra-ui/react";
+import { Spinner, Text, Wrap, WrapItem } from "@chakra-ui/react";
 import SidebarWithHeader from "./components/shared/Sidebar";
 import { useEffect, useState } from "react";
 import { getCustomers } from "./services/client";
@@ -44,9 +44,15 @@ function App() {
 
   return (
     <SidebarWithHeader>
-      {customers.map((customer) => {
-        return <ProfileCard customer={customer} />;
-      })}
+      <Wrap justify={"center"} spacing={30}>
+        {customers.map((customer) => {
+          return (
+            <WrapItem key={customer.id}>
+              <ProfileCard customer={customer} />
+            </WrapItem>
+          );
+        })}
+      </Wrap>
     </SidebarWithHeader>
   );
 }
