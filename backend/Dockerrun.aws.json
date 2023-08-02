@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "siddharthnair-api",
-      "image": "siddharthnair2/siddharthcode-api:02.08.2023.00.58.08",
+      "image": "siddharthnair2/siddharthcode-api:02.08.2023.01.10.19",
       "essential": true,
       "memory": 512,
       "portMappings": [
