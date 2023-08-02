@@ -28,7 +28,6 @@ public class Main {
             Customer customer = new Customer(
                     firstName + " " + lastName,
                     firstName.toLowerCase() +
-                            "." +
                             lastName.toLowerCase() +
                             "@gmail.com",
                     rnd.nextInt(16, 99),
