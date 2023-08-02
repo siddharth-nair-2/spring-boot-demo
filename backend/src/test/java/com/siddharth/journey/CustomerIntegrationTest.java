@@ -37,9 +37,10 @@ public class CustomerIntegrationTest {
         String name = fakerName.fullName();
         String email = fakerName.lastName() + "_" + UUID.randomUUID() + "@TESTING_EMAIL.com";
         int age = RANDOM.nextInt(1, 100);
+        String gender = new Random().nextBoolean() ? "MALE" : "FEMALE";
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age, gender
         );
 
         // send a post request
@@ -66,7 +67,7 @@ public class CustomerIntegrationTest {
 
         // make sure that customer is present
         Customer expectedCustomer = new Customer(
-                name, email, age
+                name, email, age, gender
         );
 
         assertThat(allCustomers).usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
@@ -100,9 +101,10 @@ public class CustomerIntegrationTest {
         String name = fakerName.fullName();
         String email = fakerName.lastName() + "_" + UUID.randomUUID() + "@TESTING_EMAIL.com";
         int age = RANDOM.nextInt(1, 100);
+        String gender = new Random().nextBoolean() ? "MALE" : "FEMALE";
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age, gender
         );
 
         // send a post request
@@ -159,9 +161,10 @@ public class CustomerIntegrationTest {
         String name = fakerName.fullName();
         String email = fakerName.lastName() + "_" + UUID.randomUUID() + "@TESTING_EMAIL.com";
         int age = RANDOM.nextInt(1, 100);
+        String gender = new Random().nextBoolean() ? "MALE" : "FEMALE";
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age, gender
         );
 
         // send a post request
@@ -196,8 +199,9 @@ public class CustomerIntegrationTest {
         String updatedName = faker.name().fullName();
         String updatedEmail = faker.internet().safeEmailAddress();
         int updatedAge = RANDOM.nextInt(1, 100);
+        String updatedGender = gender.equals("MALE") ? "FEMALE" : "MALE";
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(
-            updatedName, updatedEmail, updatedAge
+            updatedName, updatedEmail, updatedAge, updatedGender
         );
 
         webTestClient.put()
@@ -211,7 +215,7 @@ public class CustomerIntegrationTest {
 
         // updated customer
         Customer expected = new Customer(
-                id, updatedName, updatedEmail, updatedAge
+                id, updatedName, updatedEmail, updatedAge, updatedGender
         );
 
         // get customer by id

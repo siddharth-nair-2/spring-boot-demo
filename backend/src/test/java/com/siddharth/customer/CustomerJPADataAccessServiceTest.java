@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Random;
+
 import static org.mockito.Mockito.verify;
 
 class CustomerJPADataAccessServiceTest {
@@ -17,12 +19,12 @@ class CustomerJPADataAccessServiceTest {
 
     @BeforeEach
     void setUp() {
-        autoCloseable =  MockitoAnnotations.openMocks(this);
+        autoCloseable = MockitoAnnotations.openMocks(this);
         underTest = new CustomerJPADataAccessService(customerRepository);
     }
 
     @AfterEach
-    void tearDown() throws Exception{
+    void tearDown() throws Exception {
         autoCloseable.close();
     }
 
@@ -54,7 +56,8 @@ class CustomerJPADataAccessServiceTest {
                 3,
                 "Sid",
                 "sid@gmail.com",
-                20
+                20,
+                new Random().nextBoolean() ? "MALE" : "FEMALE"
         );
 
         // When
@@ -107,7 +110,8 @@ class CustomerJPADataAccessServiceTest {
                 3,
                 "Sid",
                 "sid@gmail.com",
-                20
+                20,
+                new Random().nextBoolean() ? "MALE" : "FEMALE"
         );
 
         // When

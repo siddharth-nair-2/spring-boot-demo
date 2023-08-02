@@ -4,9 +4,7 @@ import com.siddharth.AbstractTestcontainers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -55,6 +53,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
             assertThat(c.getName()).isEqualTo(customer.getName());
             assertThat(c.getEmail()).isEqualTo(customer.getEmail());
             assertThat(c.getAge()).isEqualTo(customer.getAge());
+            assertThat(c.getGender()).isEqualTo(customer.getGender());
         });
     }
 
@@ -195,7 +194,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
                 id,
                 updatedName,
                 customer.getEmail(),
-                customer.getAge());
+                customer.getAge(),
+                customer.getGender());
 
         underTest.updateCustomer(updatedCustomer);
 
@@ -222,7 +222,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
                 id,
                 customer.getName(),
                 updatedEmail,
-                customer.getAge());
+                customer.getAge(),
+                customer.getGender());
 
         underTest.updateCustomer(updatedCustomer);
 
@@ -274,11 +275,14 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
 
         String updatedName = FAKER.name().fullName();
         String updatedEmail = FAKER.internet().safeEmailAddress();
+        String updatedGender = Objects.equals(customer.getGender(), "MALE") ? "FEMALE" : "MALE";
         Customer updatedCustomer = new Customer(
                 id,
                 updatedName,
                 updatedEmail,
-                26);
+                26,
+                updatedGender
+        );
 
         underTest.updateCustomer(updatedCustomer);
 
@@ -304,7 +308,9 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
                 id,
                 customer.getName(),
                 customer.getEmail(),
-                customer.getAge());
+                customer.getAge(),
+                customer.getGender()
+        );
 
         underTest.updateCustomer(updatedCustomer);
 
@@ -317,10 +323,12 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
     private Customer insertLocalCustomer() {
         String email = FAKER.internet().safeEmailAddress() + "_" + UUID.randomUUID();
         String name = FAKER.name().fullName();
+        String gender = new Random().nextBoolean() ? "MALE" : "FEMALE";
         Customer customer = new Customer(
                 name,
                 email,
-                20
+                20,
+                gender
         );
         underTest.insertCustomer(customer);
 

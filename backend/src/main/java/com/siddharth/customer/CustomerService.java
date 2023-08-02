@@ -41,7 +41,8 @@ public class CustomerService {
         Customer customer = new Customer(
                 customerRegistrationRequest.name(),
                 customerRegistrationRequest.email(),
-                customerRegistrationRequest.age()
+                customerRegistrationRequest.age(),
+                customerRegistrationRequest.gender()
         );
         //
         customerDao.insertCustomer(customer);
@@ -63,6 +64,10 @@ public class CustomerService {
 
         if(updateRequest.name() != null && !updateRequest.name().equals(customer.getName())) {
             customer.setName(updateRequest.name());
+            changes = true;
+        }
+        if(updateRequest.gender() != null && !updateRequest.gender().equals(customer.getGender())) {
+            customer.setGender(updateRequest.gender());
             changes = true;
         }
         if(updateRequest.age() != null && !updateRequest.age().equals(customer.getAge())) {

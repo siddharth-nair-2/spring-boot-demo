@@ -38,9 +38,9 @@ export default function ProfileCard({ customer }: { customer: Customer }) {
         <Flex justify={"center"} mt={-12}>
           <Avatar
             size={"xl"}
-            src={
-              "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-            }
+            src={`https://randomuser.me/api/portraits/${
+              customer.gender === "MALE" ? "men" : "women"
+            }/${Math.floor(Math.random() * 100)}.jpg`}
             css={{
               border: "2px solid white",
             }}
@@ -54,7 +54,9 @@ export default function ProfileCard({ customer }: { customer: Customer }) {
               {customer.name}
             </Heading>
             <Text color={"gray.500"}>{customer.email}</Text>
-            <Text color={"gray.500"}>Age {customer.age}</Text>
+            <Text color={"gray.500"}>
+              Age {customer.age} | {customer.gender}
+            </Text>
           </Stack>
         </Box>
       </Box>

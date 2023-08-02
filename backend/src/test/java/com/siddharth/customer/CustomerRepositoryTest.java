@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.ApplicationContext;
 
+import java.util.Random;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -71,6 +72,7 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
         // Then
         assertThat(actual).isTrue();
     }
+
     @Test
     void doesNotExistCustomerById() {
         // Given
@@ -86,10 +88,12 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
     private Customer insertLocalCustomer() {
         String email = FAKER.internet().safeEmailAddress() + "_" + UUID.randomUUID();
         String name = FAKER.name().fullName();
+        String gender = new Random().nextBoolean() ? "MALE" : "FEMALE";
         Customer customer = new Customer(
                 name,
                 email,
-                20
+                20,
+                gender
         );
         underTest.save(customer);
 

@@ -22,6 +22,7 @@ public class Main {
         return args -> {
             Faker faker = new Faker();
             Random rnd = new Random();
+            String gender = new Random().nextBoolean() ? "MALE" : "FEMALE";
             String firstName = faker.name().firstName();
             String lastName = faker.name().lastName();
             Customer customer = new Customer(
@@ -30,7 +31,8 @@ public class Main {
                             "." +
                             lastName.toLowerCase() +
                             "@gmail.com",
-                    rnd.nextInt(16, 99)
+                    rnd.nextInt(16, 99),
+                    gender
             );
             customerRepository.save(customer);
         };
