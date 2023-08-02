@@ -1,15 +1,11 @@
-import {
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Select,
-} from "@chakra-ui/react";
-import { Form, SubmitHandler, useForm } from "react-hook-form";
+import { Button, FormLabel, Input, Select } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosError } from "axios";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
-import axios from "axios";
+import { saveCustomer } from "../services/client";
+import { notifications } from "../services/notification";
 
 const createCustomerSchema = z.object({
   name: z.string().min(1, { message: "Name is required." }),
@@ -21,9 +17,15 @@ const createCustomerSchema = z.object({
   gender: z.string(),
 });
 
-type CustomerSchema = z.infer<typeof createCustomerSchema>;
+export type CustomerSchema = z.infer<typeof createCustomerSchema>;
 
-const CreateCustomerForm = () => {
+const CreateCustomerForm = ({
+  fetchCustomers,
+}: {
+  fetchCustomers: () => void;
+}) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -38,10 +40,28 @@ const CreateCustomerForm = () => {
     },
   });
 
+  const submitHandler = (data: CustomerSchema) => {
+    setIsSubmitting(true);
+    saveCustomer(data)
+      .then((res) => {
+        console.log(res);
+        fetchCustomers();
+        notifications(
+          "Created customer",
+          `We have added ${data.name} successfully.`,
+          "success"
+        );
+      })
+      .catch((error: unknown | AxiosError) => {
+        console.log(error);
+      })
+      .finally(() => setIsSubmitting(false));
+  };
+
   return (
     <form
       className="px-8 pt-6 pb-8 mb-4"
-      onSubmit={handleSubmit((d) => console.log(d))}
+      onSubmit={handleSubmit((d) => submitHandler(d))}
     >
       <div className="mb-4">
         <FormLabel
@@ -89,7 +109,7 @@ const CreateCustomerForm = () => {
           <div className=" text-red-500">{errors.age.message}</div>
         )}
       </div>
-      <div className="mb-4">
+      <div className="mb-8">
         <FormLabel
           className="block mb-2 text-sm font-bold text-gray-700"
           htmlFor="gender"
@@ -104,9 +124,14 @@ const CreateCustomerForm = () => {
           <div className=" text-red-500">{errors.gender.message}</div>
         )}
       </div>
-      <div className="mb-6 text-center">
-        <Button colorScheme="teal" type="submit">
-          Create
+      <div className="mb-6 text-center w-full">
+        <Button
+          colorScheme="teal"
+          type="submit"
+          width={"full"}
+          isLoading={isSubmitting}
+        >
+          Submit
         </Button>
       </div>
       <hr className="mb-6 border-t" />

@@ -1,4 +1,4 @@
-import { Spinner, Text, Wrap, WrapItem } from "@chakra-ui/react";
+import { Spinner, Wrap, WrapItem } from "@chakra-ui/react";
 import SidebarWithHeader from "./components/shared/Sidebar";
 import { useEffect, useState } from "react";
 import { getCustomers } from "./services/client";
@@ -10,7 +10,7 @@ function App() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  const fetchCustomers = () => {
     setLoading(true);
     getCustomers()
       .then((res) => {
@@ -19,6 +19,10 @@ function App() {
       })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchCustomers();
   }, []);
 
   if (loading) {
@@ -35,22 +39,20 @@ function App() {
     );
   }
 
-  if (customers.length <= 0) {
-    return (
-      <SidebarWithHeader>
-        <Text>No Customers found!</Text>
-      </SidebarWithHeader>
-    );
-  }
-
   return (
     <SidebarWithHeader>
-      <DrawerForm />
+      <DrawerForm
+        customerExists={customers.length > 0}
+        fetchCustomers={fetchCustomers}
+      />
       <Wrap justify={"center"} spacing={30}>
         {customers.map((customer) => {
           return (
             <WrapItem key={customer.id}>
-              <ProfileCard customer={customer} />
+              <ProfileCard
+                customer={customer}
+                fetchCustomers={fetchCustomers}
+              />
             </WrapItem>
           );
         })}
