@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getCustomers } from "./services/client";
 import { Customer } from "./interface/customer";
 import ProfileCard from "./components/shared/ProfileCard";
+import DrawerForm from "./components/DrawerForm";
 
 function App() {
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -44,6 +45,7 @@ function App() {
 
   return (
     <SidebarWithHeader>
+      <DrawerForm />
       <Wrap justify={"center"} spacing={30}>
         {customers.map((customer) => {
           return (
